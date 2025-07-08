@@ -10,10 +10,12 @@ import usuariosRoutes from "./routes/usuariosRoutes.js";
 import metasRoutes from "./routes/metasRoutes.js";
 import notificacionesRoutes from "./routes/notificacionesRoutes.js";
 import "./cronJobs.js";
-
+import { fileURLToPath } from "url";
 dotenv.config();
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 
