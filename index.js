@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import { fileURLToPath } from "url";
-import { dirname, path } from "path";
+import path, { dirname } from "path";
 import categoriasRoutes from "./routes/categoriasRoutes.js";
 import ingresosRoutes from "./routes/ingresosRoutes.js";
 import gastosRoutes from "./routes/gastosRoutes.js";
