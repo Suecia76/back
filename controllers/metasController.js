@@ -1,4 +1,5 @@
 import Meta from "../models/metasDeAhorro.js";
+import Usuario from "../models/usuarios.js";
 import mongoose from "mongoose";
 
 export const obtenerMetas = async (req, res) => {
@@ -39,13 +40,24 @@ export const crearMetas = async (req, res) => {
     const {
       nombre,
       descripcion,
-      progreso,
+      progreso = 0,
       tipo,
       user_fk,
       objetivo,
       montoMensual,
       porcentajeMensual,
+      moneda_extranjera,
+      porcentaje,
     } = req.body;
+
+    if (req.body.moneda_extranjera) {
+      const { nombre, simbolo } = req.body.moneda_extranjera;
+      if (!nombre || !simbolo) {
+        return res.status(400).json({
+          message: "Faltan datos de la moneda extranjera (nombre o símbolo).",
+        });
+      }
+    }
 
     if (!user_fk || !objetivo || !nombre) {
       return res
@@ -59,20 +71,30 @@ export const crearMetas = async (req, res) => {
         .json({ message: "El user_fk no es un ObjectId válido." });
     }
 
-    // 🟢 Construir el campo tipo correctamente
     const tipoMeta = {
       fecha: null,
       montoMensual: montoMensual ?? null,
       porcentajeMensual: porcentajeMensual ?? null,
     };
 
+    // Crear arreglo de avances inicial, si progreso > 0
+    const avancesIniciales = [];
+    if (typeof progreso === "number" && progreso > 0) {
+      avancesIniciales.push({
+        cantidad: progreso,
+        fecha: new Date(),
+      });
+    }
+
     const nuevaMeta = new Meta({
       user_fk: new mongoose.Types.ObjectId(user_fk),
       objetivo,
       nombre,
       descripcion,
-      progreso,
       tipo: tipoMeta,
+      moneda_extranjera: req.body.moneda_extranjera || null,
+      avances: avancesIniciales, // importante para que el middleware calcule
+      // NO asignar directamente progreso ni porcentaje
     });
 
     const metaGuardada = await nuevaMeta.save();
@@ -105,6 +127,12 @@ export const modificarMetas = async (req, res) => {
       return res.status(404).json({ message: "Meta no encontrada" });
     }
 
+    // Buscar el usuario
+    const usuario = await Usuario.findById(meta.user_fk);
+    if (!usuario) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
     // 🔥 Actualizar tipo correctamente sin sobrescribir con un string
     if (tipo === "montoMensual") {
       meta.tipo = {
@@ -117,31 +145,60 @@ export const modificarMetas = async (req, res) => {
         porcentajeMensual: porcentajeMensual || 0,
       };
     } else {
-      // Avances manuales
       meta.tipo = {
         montoMensual: null,
         porcentajeMensual: null,
       };
     }
 
-    // 🔥 Si hay un nuevo avance manual, agregarlo al historial
-    if (progreso && progreso !== meta.progreso) {
+    // 🔥 Si la meta es en moneda extranjera y llega un avance
+    if (meta.moneda_extranjera && req.body.avance) {
+      const { cantidad, precioMoneda } = req.body.avance;
+
+      if (cantidad && precioMoneda) {
+        const totalEnPesos = cantidad * precioMoneda;
+
+        if (usuario.saldo < totalEnPesos) {
+          return res.status(400).json({ message: "Saldo insuficiente" });
+        }
+
+        meta.progreso += totalEnPesos;
+        meta.avances.push({
+          cantidad: cantidad,
+          fecha: new Date(),
+        });
+
+        usuario.saldo -= totalEnPesos;
+      }
+    }
+
+    // 🔥 Si llega un nuevo avance manual (progreso)
+    if (typeof progreso === "number" && progreso > 0) {
+      if (usuario.saldo < progreso) {
+        return res.status(400).json({ message: "Saldo insuficiente" });
+      }
+
       meta.avances.push({
         cantidad: progreso,
         fecha: new Date(),
       });
+
+      usuario.saldo -= progreso;
     }
 
-    // 🔥 Actualizar otros campos excepto `tipo` (ya lo tratamos arriba)
+    // 🔥 Actualizar otros campos excepto los ya manejados
     const {
       tipo: _,
       montoMensual: __,
       porcentajeMensual: ___,
+      progreso: ____,
+      avance: _____,
       ...rest
     } = req.body;
     Object.assign(meta, rest);
 
     await meta.save();
+    await usuario.save();
 
     res.json(meta);
   } catch (error) {

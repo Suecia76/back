@@ -2,8 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import { fileURLToPath } from "url";
-import path, { dirname } from "path";
+import path from "path";
 import categoriasRoutes from "./routes/categoriasRoutes.js";
 import ingresosRoutes from "./routes/ingresosRoutes.js";
 import gastosRoutes from "./routes/gastosRoutes.js";
@@ -15,8 +14,6 @@ import "./cronJobs.js";
 dotenv.config();
 
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 app.use(express.json());
 
