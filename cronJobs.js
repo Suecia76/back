@@ -105,7 +105,7 @@ export const notificarPendientes = async () => {
         user_fk: userId,
         titulo: title,
         body: body,
-        imagen: "./src/assets/icons/alerta.svg", // Opcional
+        imagen: "./assets/icons/alerta.svg", // Opcional
       });
     }
   } catch (error) {
@@ -139,7 +139,7 @@ export const notificarRecordatorioMetas = async () => {
         user_fk: meta.user_fk,
         titulo: "¡No olvides tu meta!",
         body: `Hace más de un mes que no aportas a tu meta "${meta.nombre}".`,
-        imagen: "./src/assets/icons/advertencia.svg",
+        imagen: "./assets/icons/advertencia.svg",
       });
     }
   }
@@ -189,7 +189,7 @@ export const notificarSaldoBajo = async () => {
           body: `Tu saldo está por debajo del ${
             porcentaje * 100
           }% de tu saldo promedio de los últimos 3 meses.`,
-          imagen: "./src/assets/icons/alerta.svg",
+          imagen: "./assets/icons/alerta.svg",
         });
       }
     }
@@ -227,7 +227,7 @@ export const notificarGastoRecurrenteProximo = async () => {
         user_fk: gasto.user_fk,
         titulo: "¡Gasto recurrente mañana!",
         body: `Mañana se debita tu gasto fijo: ${gasto.nombre}.`,
-        imagen: "./src/assets/icons/gasto.svg",
+        imagen: "./assets/icons/gasto.svg",
       });
     }
   }
@@ -265,7 +265,7 @@ export const notificarUsuarioSinDatos = async () => {
           user_fk: usuario._id,
           titulo: "¡Comienza a usar Finz!",
           body: "Crea tu primer ingreso, gasto, meta o categoría y aprovecha todas las funciones.",
-          imagen: "./src/assets/icons/alerta.svg",
+          imagen: "./assets/icons/alerta.svg",
         });
       }
     }
@@ -295,7 +295,7 @@ export const notificarMitadDeMes = async () => {
         user_fk: usuario._id,
         titulo: "¡Ya es mitad de mes!",
         body: "Sigue así, revisa tus metas y mantén el control de tus finanzas 💪",
-        imagen: "./src/assets/icons/alerta.svg",
+        imagen: "./assets/icons/alerta.svg",
       });
     }
   }
@@ -337,7 +337,7 @@ export const procesarCuotasIngresos = async () => {
         body: `Se acreditó el ingreso completo de $${ingreso.cantidad.toFixed(
           2
         )}.`,
-        imagen: "./src/assets/icons/ingresos.svg",
+        imagen: "./assets/icons/ingresos.svg",
       });
       ingreso.cuotasProcesadas = 1;
       ingreso.pendienteConfirmacion = false;
@@ -366,7 +366,7 @@ export const procesarCuotasIngresos = async () => {
         body: `Se acreditó la cuota ${cuotasProcesadas + 1} de ${
           ingreso.cuotas
         } por $${(ingreso.cantidad / ingreso.cuotas).toFixed(2)}.`,
-        imagen: "./src/assets/icons/ingresos.svg",
+        imagen: "./assets/icons/ingresos.svg",
       });
       ingreso.cuotasProcesadas = cuotasProcesadas + 1;
       await ingreso.save();
@@ -403,7 +403,7 @@ export const procesarIngresosCuotaUnica = async () => {
       body: `Se acreditó el ingreso completo de $${ingreso.cantidad.toFixed(
         2
       )}.`,
-      imagen: "./src/assets/icons/ingresos.svg",
+      imagen: "./assets/icons/ingresos.svg",
     });
 
     ingreso.cuotasProcesadas = 1;
@@ -450,7 +450,7 @@ export const procesarCuotasGastos = async () => {
         body: `Se descontó la cuota ${cuotasProcesadas + 1} de ${
           gasto.cuotas
         } por $${(gasto.cantidad / gasto.cuotas).toFixed(2)}.`,
-        imagen: "./src/assets/icons/gasto.svg",
+        imagen: "./assets/icons/gasto.svg",
       });
       // Marcar cuota como procesada
       gasto.cuotasProcesadas = cuotasProcesadas + 1;
@@ -486,7 +486,7 @@ export const procesarGastosCuotaUnica = async () => {
       user_fk: gasto.user_fk,
       titulo: "gasto acreditado",
       body: `Se acreditó el gasto completo de $${gasto.cantidad.toFixed(2)}.`,
-      imagen: "./src/assets/icons/gasto.svg",
+      imagen: "./assets/icons/gasto.svg",
     });
 
     gasto.cuotasProcesadas = 1;
@@ -532,7 +532,7 @@ export const procesarCuotasManualesIngresos = async () => {
         }) de $${(ingreso.cantidad / ingreso.cuotas).toFixed(
           2
         )} para acreditar manualmente.`,
-        imagen: "./src/assets/icons/alerta.svg",
+        imagen: "./assets/icons/alerta.svg",
       });
     }
   }
@@ -573,7 +573,7 @@ export const procesarCuotasManualesGastos = async () => {
         }) de $${(gasto.cantidad / gasto.cuotas).toFixed(
           2
         )} para descontar manualmente.`,
-        imagen: "./src/assets/icons/alerta.svg",
+        imagen: "./assets/icons/alerta.svg",
       });
     }
   }
@@ -614,7 +614,7 @@ export const procesarMetas = async () => {
             user_fk: usuario._id,
             titulo: "¡Meta alcanzada!",
             body: `Has alcanzado tu meta "${meta.nombre}". 🎉`,
-            imagen: "./src/assets/icons/meta_cumplida.svg",
+            imagen: "./assets/icons/meta_cumplida.svg",
           });
         }
 
@@ -642,7 +642,7 @@ export const procesarMetas = async () => {
           body: `No se pudo aportar $${descuento.toFixed(2)} a tu meta "${
             meta.nombre
           }" porque tu saldo actual no es suficiente.`,
-          imagen: "./src/assets/icons/alerta.svg",
+          imagen: "./assets/icons/alerta.svg",
         });
 
         continue;
@@ -678,7 +678,7 @@ export const procesarMetas = async () => {
         body: `Se acreditó $${aporteFinal.toFixed(2)} a tu meta "${
           meta.nombre
         }". ¡Sigue así!`,
-        imagen: "./src/assets/icons/meta.svg",
+        imagen: "./assets/icons/meta.svg",
       });
 
       // 🟢 Si con este aporte se alcanza el objetivo
@@ -691,7 +691,7 @@ export const procesarMetas = async () => {
           user_fk: usuario._id,
           titulo: "¡Meta alcanzada!",
           body: `¡Felicidades! Has alcanzado tu meta "${meta.nombre}". 🎉`,
-          imagen: "./src/assets/icons/meta_cumplida.svg",
+          imagen: "./assets/icons/meta_cumplida.svg",
         });
       }
     }
@@ -780,7 +780,7 @@ export const notificarGastosSemanales = async () => {
         body: `Tienes ${totalGastos} gastos programados esta semana por un total de $${totalMonto.toFixed(
           2
         )}.`,
-        imagen: "./src/assets/icons/gasto.svg",
+        imagen: "./assets/icons/gasto.svg",
       });
       console.log(`✅ Notificación guardada en DB para usuario ${userId}`);
     }
