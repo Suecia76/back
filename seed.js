@@ -27,18 +27,51 @@ const connectDB = async () => {
 
 // Leer categorías predeterminadas desde la carpeta 'uploads/predeterminadas'
 const obtenerCategoriasPredeterminadas = () => {
-  const predeterminadasPath = path.resolve("uploads", "predeterminadas");
+  // Lista manual para asegurar ortografía y rutas correctas
+  const categorias = [
+    { nombre: "Agua", imagen: "predeterminadas/agua" },
+    { nombre: "Ahorros", imagen: "predeterminadas/ahorros" },
+    { nombre: "Alquiler", imagen: "predeterminadas/alquiler" },
+    { nombre: "Automóviles", imagen: "predeterminadas/automoviles" },
+    { nombre: "Calzado", imagen: "predeterminadas/calzado" },
+    { nombre: "Cine", imagen: "predeterminadas/cine" },
+    { nombre: "Combustible", imagen: "predeterminadas/combustible" },
+    { nombre: "Comida", imagen: "predeterminadas/comida" },
+    {
+      nombre: "Cuidado Personal",
+      imagen: "predeterminadas/cuidado_personal",
+    },
+    { nombre: "Educación", imagen: "predeterminadas/educacion" },
+    { nombre: "Fiestas", imagen: "predeterminadas/fiestas" },
+    { nombre: "Internet", imagen: "predeterminadas/internet" },
+    { nombre: "Inversión", imagen: "predeterminadas/inversion" },
+    { nombre: "Juegos", imagen: "predeterminadas/juegos" },
+    { nombre: "Luz", imagen: "predeterminadas/luz" },
+    { nombre: "Mascotas", imagen: "predeterminadas/mascotas" },
+    { nombre: "Medicamentos", imagen: "predeterminadas/medicamentos" },
+    { nombre: "Merienda", imagen: "predeterminadas/merienda" },
+    { nombre: "Multa", imagen: "predeterminadas/multa" },
+    { nombre: "Ok", imagen: "predeterminadas/ok" },
+    { nombre: "Pedidos", imagen: "predeterminadas/pedidos" },
+    { nombre: "Peluquería", imagen: "predeterminadas/peluqueria" },
+    { nombre: "Regalos", imagen: "predeterminadas/regalos" },
+    { nombre: "Ropa", imagen: "predeterminadas/ropa" },
+    { nombre: "Sueldo", imagen: "predeterminadas/sueldo" },
+    { nombre: "Suscripciones", imagen: "predeterminadas/suscripciones" },
+    { nombre: "Tiendas", imagen: "predeterminadas/tiendas" },
+    {
+      nombre: "Transporte Público",
+      imagen: "predeterminadas/transporte_publico",
+    },
+    { nombre: "Vacaciones", imagen: "predeterminadas/vacaciones" },
+    { nombre: "Biyuntería", imagen: "predeterminadas/biyunteria" },
+    { nombre: "Cable-Streaming", imagen: "predeterminadas/cable_streaming" },
+    { nombre: "Viajes", imagen: "predeterminadas/viajes" },
+  ];
 
-  if (!fs.existsSync(predeterminadasPath)) {
-    console.error("La carpeta 'uploads/predeterminadas' no existe.");
-    return [];
-  }
-
-  const archivos = fs.readdirSync(predeterminadasPath);
-
-  return archivos.map((archivo) => ({
-    nombre: path.parse(archivo).name, // Sin extensión
-    imagen: `predeterminadas/${path.parse(archivo).name}`, // Sin extensión
+  return categorias.map((cat) => ({
+    nombre: cat.nombre,
+    imagen: cat.imagen,
     predeterminada: true,
   }));
 };
@@ -201,16 +234,26 @@ const seedDatabase = async () => {
 
       // Fechas variadas
       const hoy = new Date();
-      const hace1dias = new Date(hoy); hace1dias.setDate(hoy.getDate() - 1);
-      const hace2dias = new Date(hoy); hace2dias.setDate(hoy.getDate() - 2);
-      const hace3dias = new Date(hoy); hace3dias.setDate(hoy.getDate() - 3);
-      const hace4dias = new Date(hoy); hace4dias.setDate(hoy.getDate() - 4);
-      const hace5dias = new Date(hoy); hace5dias.setDate(hoy.getDate() - 5);
-      const hace6dias = new Date(hoy); hace6dias.setDate(hoy.getDate() - 6);
-      const hace7dias = new Date(hoy); hace7dias.setDate(hoy.getDate() - 7);
-      const hace10dias = new Date(hoy); hace10dias.setDate(hoy.getDate() - 10);
-      const hace15dias = new Date(hoy); hace15dias.setDate(hoy.getDate() - 15);
-      const mesPasado = new Date(hoy); mesPasado.setMonth(hoy.getMonth() - 1);
+      const hace1dias = new Date(hoy);
+      hace1dias.setDate(hoy.getDate() - 1);
+      const hace2dias = new Date(hoy);
+      hace2dias.setDate(hoy.getDate() - 2);
+      const hace3dias = new Date(hoy);
+      hace3dias.setDate(hoy.getDate() - 3);
+      const hace4dias = new Date(hoy);
+      hace4dias.setDate(hoy.getDate() - 4);
+      const hace5dias = new Date(hoy);
+      hace5dias.setDate(hoy.getDate() - 5);
+      const hace6dias = new Date(hoy);
+      hace6dias.setDate(hoy.getDate() - 6);
+      const hace7dias = new Date(hoy);
+      hace7dias.setDate(hoy.getDate() - 7);
+      const hace10dias = new Date(hoy);
+      hace10dias.setDate(hoy.getDate() - 10);
+      const hace15dias = new Date(hoy);
+      hace15dias.setDate(hoy.getDate() - 15);
+      const mesPasado = new Date(hoy);
+      mesPasado.setMonth(hoy.getMonth() - 1);
 
       // GASTOS VARIADOS
       const gastos = [
@@ -383,7 +426,10 @@ const seedDatabase = async () => {
       }));
 
       const gastosInsertados = await Gasto.insertMany(gastos);
-      console.log(`Gastos insertados para ${usuario.email}: `, gastosInsertados);
+      console.log(
+        `Gastos insertados para ${usuario.email}: `,
+        gastosInsertados
+      );
 
       // INGRESOS VARIADOS
       const ingresos = [

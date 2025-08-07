@@ -13,9 +13,6 @@ import "./cronJobs.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 dotenv.config();
 
 const app = express();
@@ -55,7 +52,10 @@ app.use("/categorias", categoriasRoutes);
 app.use("/metas", metasRoutes);
 app.use("/notificaciones", notificacionesRoutes);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 // Página principal
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
