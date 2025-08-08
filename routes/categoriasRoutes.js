@@ -16,14 +16,14 @@ const router = express.Router();
 // Obtener todos los Categorias
 router.get("/", obtenerCategoriasPredeterminadas);
 
+// Obtener un categoria por el usuario
+router.get("/usuario/:userId", auth, obtenerCategoriaUser);
+
 // Crear Categorias nuevos
 router.post("/", upload.single("imagen"), auth, crearCategorias);
 
 // Obtener un categoria por su ID
 router.get("/:id", obtenerCategoriasId);
-
-// Obtener un categoria por el usuario
-router.get("/usuario/:userId", auth, obtenerCategoriaUser);
 
 // Actualizar un categoria por su ID
 router.put("/:id", upload.single("imagen"), auth, modificarCategorias);
