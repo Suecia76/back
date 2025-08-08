@@ -29,7 +29,7 @@ router.get("/saldo/:id", auth, obtenerSaldoByUser);
 // routes/usuariosRoutes.js
 router.get("/calendario/:userId", auth, obtenerMovimientosCalendario);
 
-// // Paginado de Usuarios
+// Paginado de Usuarios
 // router.get("/paginado", paginatedUsuarios);
 
 // Ruta para iniciar sesión (login)

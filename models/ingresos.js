@@ -16,7 +16,7 @@ const IngresosSchema = new mongoose.Schema(
     descripcion: { type: String },
     cantidad: { type: Number, required: true },
     tipo: { type: String, enum: ["fijo", "variable"], required: true },
-    cuotas: { type: Number, min: 1, default: 1 }, // <-- Nuevo campo
+    cuotas: { type: Number, min: 1, default: 1 },
     frecuencia: {
       type: String,
       enum: ["mensual", "quincenal", "semanal"],

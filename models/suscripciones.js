@@ -8,7 +8,7 @@ const SuscripcionesSchema = new mongoose.Schema({
     unique: true,
   },
   subscription: {
-    type: Object, // Suscripción web-push (puede ser null si solo usa FCM)
+    type: Object, // Suscripción web-push
     required: false,
   },
   fcmToken: {

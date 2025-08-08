@@ -22,7 +22,7 @@ export const obtenerCategoriasPredeterminadas = async (req, res) => {
 export const crearCategorias = async (req, res) => {
   const { nombre, user_fk } = req.body;
   console.log("Datos recibidos:", req.body);
-  console.log("Archivo recibido:", req.file); // Verifica si el archivo está en req.file
+  console.log("Archivo recibido:", req.file);
 
   // Validar que el user_fk sea un ObjectId válido
   if (!mongoose.Types.ObjectId.isValid(user_fk)) {

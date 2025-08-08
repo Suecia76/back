@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import Usuario from "../models/usuario.js"; // Ajusta la ruta si es necesario
-import Meta from "../models/meta.js"; // Ajusta la ruta si es necesario
-import Avance from "../models/avance.js"; // Ajusta la ruta si es necesario
+import Usuario from "../models/usuario.js";
+import Meta from "../models/meta.js";
+import Avance from "../models/avance.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -14,7 +14,7 @@ async function generarAvances() {
   const ahora = new Date();
 
   for (const usuario of usuarios) {
-    // Busca una meta del usuario (ajusta si tienes varias)
+    // Busca una meta del usuario
     const meta = await Meta.findOne({ user_fk: usuario._id });
     if (!meta) continue;
 
@@ -33,7 +33,7 @@ async function generarAvances() {
       await Avance.create({
         meta_fk: meta._id,
         user_fk: usuario._id,
-        cantidad: 10 + i, // Puedes ajustar el valor
+        cantidad: 10 + i,
         fecha: fecha,
       });
     }

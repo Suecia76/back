@@ -25,7 +25,6 @@ const connectDB = async () => {
   }
 };
 
-// Leer categorías predeterminadas desde la carpeta 'uploads/predeterminadas'
 const obtenerCategoriasPredeterminadas = () => {
   // Lista manual para asegurar ortografía y rutas correctas
   const categorias = [

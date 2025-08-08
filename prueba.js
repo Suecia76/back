@@ -14,7 +14,7 @@ webpush.setVapidDetails(
 );
 
 const url = process.env.DB_URL;
-const GOOGLE_APPLICATION_CREDENTIALS = "./service-account.json"; // Ruta a tu JSON
+const GOOGLE_APPLICATION_CREDENTIALS = "./service-account.json";
 
 async function getAccessToken() {
   const auth = new GoogleAuth({

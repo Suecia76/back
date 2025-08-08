@@ -12,7 +12,7 @@ webpush.setVapidDetails(
 );
 
 const url = process.env.DB_URL;
-const FCM_SERVER_KEY = process.env.FCM_SERVER_KEY; // Debes tener esto en tu .env
+const FCM_SERVER_KEY = process.env.FCM_SERVER_KEY;
 
 async function sendTestNotification(userId) {
   await mongoose.connect(url);
@@ -77,5 +77,4 @@ async function sendTestNotification(userId) {
   process.exit();
 }
 
-// Reemplaza por el ObjectId de tu usuario
 sendTestNotification("684af9925b56ce8088e1c8ba");

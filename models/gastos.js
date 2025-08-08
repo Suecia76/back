@@ -17,13 +17,13 @@ const GastosSchema = new mongoose.Schema(
     cantidad: { type: Number, required: true },
     tipo: { type: String, enum: ["fijo", "variable"], required: true }, // Define valores válidos para `tipo`
     estado: { type: String, enum: ["pendiente", "pagado"], required: true },
-    cuotas: { type: Number, min: 1, default: 1 }, // Ya existe
+    cuotas: { type: Number, min: 1, default: 1 },
     frecuencia: {
       type: String,
       enum: ["mensual", "quincenal", "semanal"],
       default: "mensual",
-    }, // Nuevo
-    fechaInicio: { type: Date, default: Date.now }, // Nuevo
+    },
+    fechaInicio: { type: Date, default: Date.now },
     pendienteConfirmacion: { type: Boolean, default: false },
     cuotasProcesadas: { type: Number, default: 0 },
     cuotasAutomaticas: { type: Boolean, default: true },

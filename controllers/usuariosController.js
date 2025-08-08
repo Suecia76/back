@@ -14,7 +14,7 @@ const secretKey = process.env.SECRET;
 
 export const obtenerUsuarios = async (req, res) => {
   try {
-    let users = await Usuario.find(); // Busca todos los usuarios en MongoDB
+    let users = await Usuario.find();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener usuarios" });
@@ -25,7 +25,7 @@ export const obtenerUsuarioId = async (req, res) => {
   const userId = req.params.id;
 
   try {
-    const user = await Usuario.findById(userId); // Busca un usuario por su ID
+    const user = await Usuario.findById(userId);
     if (user) {
       res.status(200).json(user);
     } else {
@@ -61,7 +61,6 @@ export const crearUsuario = async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     if (error.code === 11000) {
-      // Código 11000 indica error de clave duplicada
       res.status(400).json({ message: "El email ya está registrado" });
     } else {
       console.error(error);
@@ -74,7 +73,7 @@ export const iniciarSesionUsuario = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await Usuario.findOne({ email }); // Busca un usuario por su email
+    const user = await Usuario.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
@@ -149,11 +148,11 @@ export const eliminarUsuario = async (req, res) => {
   const userId = req.params.id;
 
   try {
-    const user = await Usuario.findByIdAndDelete(userId); // Elimina el usuario por ID
+    const user = await Usuario.findByIdAndDelete(userId);
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
-    res.status(204).send(); // 204 No Content
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ message: "Error al eliminar el usuario" });
   }
@@ -217,7 +216,7 @@ export const obtenerMovimientosCalendario = async (req, res) => {
     // Procesar ingresos
     ingresos.forEach((ingreso) => {
       if (ingreso.tipo === "fijo") {
-        // Repetir cada mes hasta hoy o hasta una fecha límite (ejemplo: 12 meses)
+        // Repetir cada mes hasta hoy o hasta una fecha límite
         const start = new Date(ingreso.createdAt);
         const limite = new Date();
         limite.setMonth(limite.getMonth() + 12); // muestra 12 meses a futuro
@@ -330,13 +329,13 @@ export const calcularResumenMensual = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    // 📌 Buscar usuario
+    //  Buscar usuario
     const usuario = await Usuario.findById(userId);
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado." });
     }
 
-    // 📅 Rango del mes actual
+    //  Rango del mes actual
     const startOfMonth = new Date();
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
@@ -351,7 +350,7 @@ export const calcularResumenMensual = async (req, res) => {
       999
     );
 
-    // 📌 Traer solo movimientos activos y confirmados
+    //  Traer solo movimientos activos y confirmados
     const [gastos, ingresos] = await Promise.all([
       Gasto.find({
         user_fk: userId,
@@ -365,7 +364,7 @@ export const calcularResumenMensual = async (req, res) => {
       }),
     ]);
 
-    // 📌 Calcular cuota correspondiente a este periodo
+    //  Calcular cuota correspondiente a este periodo
     const calcularCuotaMes = (movimiento) => {
       const totalCuotas = movimiento.cuotas || 1;
       const inicio = new Date(movimiento.fechaInicio);
@@ -393,7 +392,7 @@ export const calcularResumenMensual = async (req, res) => {
 
       const cuotaActual = periodosPasados + 1; // porque la primera cuota es 1
 
-      // 🛑 No contar si:
+      //  No contar si:
       if (
         cuotaActual <= 0 || // aún no empieza
         cuotaActual > totalCuotas // ya terminaron todas las cuotas
@@ -404,7 +403,7 @@ export const calcularResumenMensual = async (req, res) => {
       return movimiento.cantidad / totalCuotas;
     };
 
-    // 📊 Calcular totales del mes
+    //  Calcular totales del mes
     const totalGastosMes = gastos.reduce(
       (total, gasto) => total + calcularCuotaMes(gasto),
       0
@@ -414,7 +413,7 @@ export const calcularResumenMensual = async (req, res) => {
       0
     );
 
-    // 📌 Sumar al saldo actual
+    //  Sumar al saldo actual
     const disponible = usuario.saldo + totalIngresosMes - totalGastosMes;
 
     res.json({

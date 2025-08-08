@@ -133,7 +133,6 @@ export const modificarMetas = async (req, res) => {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    // 🔥 Actualizar tipo correctamente sin sobrescribir con un string
     if (tipo === "montoMensual") {
       meta.tipo = {
         montoMensual: montoMensual || 0,
@@ -151,7 +150,7 @@ export const modificarMetas = async (req, res) => {
       };
     }
 
-    // 🔥 Si la meta es en moneda extranjera y llega un avance
+    //  Si la meta es en moneda extranjera y llega un avance
     if (meta.moneda_extranjera && req.body.avance) {
       const { cantidad, precioMoneda } = req.body.avance;
 
@@ -172,7 +171,7 @@ export const modificarMetas = async (req, res) => {
       }
     }
 
-    // 🔥 Si llega un nuevo avance manual (progreso)
+    //  Si llega un nuevo avance manual (progreso)
     if (typeof progreso === "number" && progreso > 0) {
       if (usuario.saldo < progreso) {
         return res.status(400).json({ message: "Saldo insuficiente" });
@@ -186,7 +185,7 @@ export const modificarMetas = async (req, res) => {
       usuario.saldo -= progreso;
     }
 
-    // 🔥 Actualizar otros campos excepto los ya manejados
+    //  Actualizar otros campos excepto los ya manejados
     const {
       tipo: _,
       montoMensual: __,

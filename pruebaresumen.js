@@ -24,7 +24,7 @@ const connectDB = async () => {
 
 const seedOneUser = async () => {
   try {
-    // 🧹 Limpiar colecciones
+    //  Limpiar colecciones
     await Promise.all([
       Usuario.deleteMany(),
       Gasto.deleteMany(),
@@ -33,7 +33,7 @@ const seedOneUser = async () => {
       Categoria.deleteMany(),
     ]);
 
-    // 👤 Crear usuario demo
+    //  Crear usuario demo
     const passwordHashed = await bcrypt.hash("123456", 10);
     const user = await Usuario.create({
       name: "Diego",
@@ -46,7 +46,7 @@ const seedOneUser = async () => {
     });
     console.log("👤 Usuario creado:", user.email);
 
-    // 📂 Crear categorías demo
+    //  Crear categorías demo
     const categorias = await Categoria.insertMany([
       {
         nombre: "Alquiler",
@@ -73,7 +73,7 @@ const seedOneUser = async () => {
 
     const [cat1, cat2, cat3, cat4] = categorias.map((c) => c._id);
 
-    // 📅 Fechas variadas
+    //  Fechas variadas
     const hoy = new Date();
     const hace5dias = new Date(hoy);
     hace5dias.setDate(hoy.getDate() - 5);
@@ -82,7 +82,7 @@ const seedOneUser = async () => {
     const mesPasado = new Date(hoy);
     mesPasado.setMonth(hoy.getMonth() - 1);
 
-    // 💸 Crear gastos
+    //  Crear gastos
     const gastos = [
       {
         nombre: "Alquiler",
@@ -140,7 +140,7 @@ const seedOneUser = async () => {
     await Gasto.insertMany(gastos);
     console.log("💸 Gastos creados");
 
-    // 💰 Crear ingresos
+    //  Crear ingresos
     const ingresos = [
       {
         nombre: "Salario",
@@ -182,7 +182,7 @@ const seedOneUser = async () => {
     await Ingreso.insertMany(ingresos);
     console.log("💰 Ingresos creados");
 
-    // 🎯 Meta de ahorro
+    //  Meta de ahorro
     const meta = {
       nombre: "Viaje a Japón",
       descripcion: "Ahorro para un viaje",
@@ -202,7 +202,7 @@ const seedOneUser = async () => {
   }
 };
 
-// 🚀 Ejecutar
+//  Ejecutar
 (async () => {
   await connectDB();
   await seedOneUser();
