@@ -20,7 +20,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: "https://finz-front.vercel.app/users/login", // Permitir todos los orígenes
+  origin: "https://finz-front.vercel.app/", // Permitir todos los orígenes
   methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
   allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras permitidas
 };
