@@ -20,7 +20,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: "*", // Permitir todos los orígenes
+  origin: "https://front-vngw.vercel.app", // Permitir todos los orígenes
   methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
   allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras permitidas
 };
