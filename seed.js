@@ -94,11 +94,11 @@ const usuariosDePrueba = [
     password: "123456",
   },
   {
-    name: "Bruno",
+    name: "Cristian",
     lastname: "Demo",
     age: 27,
     phonenumber: 333333333,
-    email: "bruno@demo.com",
+    email: "cristian@demo.com",
     password: "123456",
   },
   {
