@@ -140,7 +140,7 @@ export const obtenerCategoriaUser = async (req, res) => {
   try {
     const { id } = req.params;
     const categorias = await Categoria.find({
-      usuario_fk: id,
+      user_fk: id,
       predeterminada: false,
     });
     res.json(categorias);
