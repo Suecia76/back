@@ -26,7 +26,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use("/uploads", express.static(path.resolve("uploads")));
+app.use("/uploads", cors(), express.static(path.resolve("uploads")));
 
 // Iniciar servidor
 const PORT = 3000;
