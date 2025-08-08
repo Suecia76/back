@@ -484,7 +484,7 @@ export const procesarGastosCuotaUnica = async () => {
 
     await Notificacion.create({
       user_fk: gasto.user_fk,
-      titulo: "gasto acreditado",
+      titulo: "Gasto acreditado",
       body: `Se acreditó el gasto completo de $${gasto.cantidad.toFixed(2)}.`,
       imagen: "/assets/icons/gasto.svg",
     });
