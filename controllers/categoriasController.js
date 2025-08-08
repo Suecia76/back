@@ -138,9 +138,9 @@ export const eliminarCategorias = async (req, res) => {
 
 export const obtenerCategoriaUser = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { userId } = req.params;
     const categorias = await Categoria.find({
-      user_fk: id,
+      user_fk: userId,
       predeterminada: false,
     });
     res.json(categorias);
